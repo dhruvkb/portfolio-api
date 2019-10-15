@@ -27,7 +27,8 @@ module.exports = (req, res) => {
               slug: post.slug,
               url: `${url}${post.slug}`,
               title: post.title,
-              excerpt: post.body.substring(0, post.body.indexOf('</p>\n') + 4)
+              excerpt: post.body.substring(0, post.body.indexOf('</p>\n') + 4),
+              created: post.created
             }
           }
         )
