@@ -9,19 +9,19 @@ const logic = (slug, res) => {
   axios
     .get(`${constants.writeAs.apiBase}/${path}/${slug}`)
     .then(response => {
-      return response.data.data
-    })
-    .then(post => ({
-      id: post.id,
-      slug: post.slug,
-      created: post.created,
-      title: post.title,
-      tags: post.tags,
-      writeAsUrl: `${constants.writeAs.blog}/${post.slug}`,
-      portfolioUrl: `${constants.portfolio.post}/${post.slug}`,
-      body: markdownIt.render(post.body)
-    }))
-    .then(post => {
+      let post = response.data.data
+
+      post = {
+        id: post.id,
+        slug: post.slug,
+        created: post.created,
+        title: post.title,
+        tags: post.tags,
+        writeAsUrl: `${constants.writeAs.blog}/${post.slug}`,
+        portfolioUrl: `${constants.portfolio.post}/${post.slug}`,
+        body: markdownIt.render(post.body)
+      }
+
       res.status(200).json({ post })
     })
     .catch(() => {
