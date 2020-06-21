@@ -11,28 +11,23 @@ const logic = (offset, res) => {
     .then(response => {
       return response.data.data.posts
     })
-    .then(posts => {
-      return posts
-        .slice(offset, offset + 5)
-        .map((post, index) => {
-          const excerpt = markdownIt.render(post.body.substring(
-            0,
-            post.body.indexOf('<!--more-->') - 1 // -1 to remove the newline
-          ))
-
-          return {
-            index: index + offset,
-            id: post.id,
-            slug: post.slug,
-            created: post.created,
-            title: post.title,
-            tags: post.tags,
-            writeAsUrl: `${constants.writeAs.blog}/${post.slug}`,
-            portfolioUrl: `${constants.portfolio.post}/${post.slug}`,
-            excerpt
-          }
-        })
-    })
+    .then(posts => posts
+      .slice(offset, offset + 5)
+      .map((post, index) => ({
+        index: index + offset,
+        id: post.id,
+        slug: post.slug,
+        created: post.created,
+        title: post.title,
+        tags: post.tags,
+        writeAsUrl: `${constants.writeAs.blog}/${post.slug}`,
+        portfolioUrl: `${constants.portfolio.post}/${post.slug}`,
+        excerpt: markdownIt.render(post.body.substring(
+          0,
+          post.body.indexOf('<!--more-->') - 1 // -1 to remove the newline
+        ))
+      }))
+    )
     .then(posts => {
       res.status(200).json({ posts })
     })

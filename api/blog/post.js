@@ -11,20 +11,16 @@ const logic = (slug, res) => {
     .then(response => {
       return response.data.data
     })
-    .then(post => {
-      const body = markdownIt.render(post.body)
-
-      return {
-        id: post.id,
-        slug: post.slug,
-        created: post.created,
-        title: post.title,
-        tags: post.tags,
-        writeAsUrl: `${constants.writeAs.blog}/${post.slug}`,
-        portfolioUrl: `${constants.portfolio.post}/${post.slug}`,
-        body
-      }
-    })
+    .then(post => ({
+      id: post.id,
+      slug: post.slug,
+      created: post.created,
+      title: post.title,
+      tags: post.tags,
+      writeAsUrl: `${constants.writeAs.blog}/${post.slug}`,
+      portfolioUrl: `${constants.portfolio.post}/${post.slug}`,
+      body: markdownIt.render(post.body)
+    }))
     .then(post => {
       res.status(200).json({ post })
     })
@@ -42,10 +38,6 @@ module.exports = (req, res) => {
   if (slug) {
     logic(slug, res)
   } else {
-    res
-      .status(400)
-      .json({
-        message: 'Param \'slug\' is required'
-      })
+    res.status(400).json({ message: 'Param \'slug\' is required' })
   }
 }
