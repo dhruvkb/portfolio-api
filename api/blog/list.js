@@ -9,7 +9,7 @@ const logic = (offset, count, res) => {
   axios
     .get(`${constants.writeAs.apiBase}/${path}`)
     .then(response => {
-      const total_count = response.data.data.total_posts
+      const totalCount = response.data.data.total_posts
       let posts = response.data.data.posts
 
       posts = posts
@@ -29,7 +29,7 @@ const logic = (offset, count, res) => {
           ))
         }))
 
-      res.status(200).json({ total_count, posts })
+      res.status(200).json({ totalCount, posts })
     })
     .catch(() => {
       res.status(500).json({ message: 'Axios error' })
