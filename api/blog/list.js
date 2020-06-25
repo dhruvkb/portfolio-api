@@ -3,17 +3,17 @@ const markdownIt = require('markdown-it')('commonmark')
 
 const constants = require('../constants')
 
-const logic = (offset, res) => {
+const logic = (offset, count, res) => {
   const path = 'collections/dhruvkb/posts'
 
   axios
     .get(`${constants.writeAs.apiBase}/${path}`)
     .then(response => {
-      const count = response.data.data.total_posts
+      const total_count = response.data.data.total_posts
       let posts = response.data.data.posts
 
       posts = posts
-        .slice(offset, offset + 5)
+        .slice(offset, offset + count)
         .map((post, index) => ({
           index: index + offset,
           id: post.id,
@@ -29,7 +29,7 @@ const logic = (offset, res) => {
           ))
         }))
 
-      res.status(200).json({ count, posts })
+      res.status(200).json({ total_count, posts })
     })
     .catch(() => {
       res.status(500).json({ message: 'Axios error' })
@@ -37,11 +37,12 @@ const logic = (offset, res) => {
 }
 
 module.exports = (req, res) => {
-  let { offset = '0' } = req.query
+  let { offset = '0', count = '5' } = req.query
   offset = parseInt(offset)
+  count = parseInt(count)
 
   // Bypass CORS issues
   res.setHeader('Access-Control-Allow-Origin', '*')
 
-  logic(offset, res)
+  logic(offset, count, res)
 }
