@@ -18,4 +18,5 @@ These here are API endpoints that enable functionality on my portfolio.
 ### Related repos
 
 - [Portfolio](https://github.com/dhruvkb/portfolio/)
+- [Blog posts](https://github.com/dhruvkb/portfolio-blog/)
 - [Résumés](https://github.com/dhruvkb/resume/)
