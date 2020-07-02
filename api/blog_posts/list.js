@@ -38,6 +38,8 @@ const logic = (offset, count, res) => {
     .then(response => {
       const { entries } = response.data.data.repository.tree
 
+      const totalCount = entries.length - 1 // Hide blog post #0
+
       const posts = entries
         .sort((a, b) => a.name.localeCompare(b.name))
         .slice(offset, offset + count)
@@ -49,7 +51,10 @@ const logic = (offset, count, res) => {
           return post
         })
 
-      res.status(200).json(posts)
+      res.status(200).json({
+        totalCount,
+        posts
+      })
     })
 }
 
