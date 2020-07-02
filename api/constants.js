@@ -12,7 +12,7 @@ module.exports = {
   },
   api: {
     blogPosts: {
-      list: (offset = 1, count = 5) =>
+      list: (offset = 0, count = 5) =>
         `${origin}/api/blog_posts/list?offset=${offset}&count=${count}`,
       retrieve: (slug = 'hello_world') =>
         `${origin}/api/blog_posts/retrieve?slug=${slug}`

@@ -41,8 +41,8 @@ const logic = (offset, count, res) => {
       const totalCount = entries.length - 1 // Hide blog post #0
 
       const posts = entries
-        .sort((a, b) => a.name.localeCompare(b.name))
-        .slice(offset, offset + count)
+        .sort((a, b) => -a.name.localeCompare(b.name))
+        .slice(offset, Math.min(offset + count, totalCount))
         .map(entry => {
           let post = JSON.parse(entry.file.text)
           post.apiUrl = constants.api.blogPosts.retrieve(post.slug)
@@ -59,7 +59,7 @@ const logic = (offset, count, res) => {
 }
 
 module.exports = (req, res) => {
-  let { offset = '1', count = '5' } = req.query
+  let { offset = '0', count = '5' } = req.query
   offset = parseInt(offset)
   count = parseInt(count)
 
