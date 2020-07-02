@@ -4,6 +4,7 @@ node_modules
 
 # Tooling
 .vercel
+.env
 
 # Editor directories and files
 .idea
