@@ -1,7 +1,9 @@
+const constants = require('../constants')
+
 const logic = (res) => {
   res.status(200).json({
-    list: './list/?offset[number?]',
-    retrieve: './post/?slug[string]'
+    list: constants.api.blogPosts.list(),
+    retrieve: constants.api.blogPosts.retrieve()
   })
 }
 
