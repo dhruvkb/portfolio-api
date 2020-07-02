@@ -1,9 +1,24 @@
+const origin = process.env.ORIGIN || 'https://api.dhruvkb.now.sh'
+
 module.exports = {
-  writeAs: {
-    apiBase: 'https://write.as/api',
-    blog: 'https://dhruvkb.writeas.com'
+  gitHub: {
+    apiEndpoint: 'https://api.github.com/graphql',
+
+    username: 'dhruvkb',
+    personalAccessToken: process.env.GITHUB_PERSONAL_ACCESS_TOKEN,
+
+    metadataBranch: 'metadata',
+    postsBranch: 'master'
+  },
+  api: {
+    blogPosts: {
+      list: (offset = 1, count = 5) =>
+        `${origin}/api/blog_posts/list?offset=${offset}&count=${count}`,
+      retrieve: (slug = 'hello_world') =>
+        `${origin}/api/blog_posts/retrieve?slug=${slug}`
+    }
   },
   portfolio: {
-    post: 'https://dhruvkb.github.io/#/blog/post'
+    post: (slug) => `https://dhruvkb.github.io/#/blog/post/${slug}`
   }
 }
