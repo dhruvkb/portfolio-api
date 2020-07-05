@@ -1,6 +1,6 @@
 const axios = require('axios')
 const frontMatter = require('front-matter')
-const markdownIt = require('markdown-it')('commonmark')
+const markdownIt = require('markdown-it')({ html: true })
 
 const constants = require('../constants')
 
