@@ -23,8 +23,8 @@ const logic = (offset, count, res) => {
       }
     `,
     variables: {
-      repoOwner: 'dhruvkb',
-      repoName: 'portfolio-blog',
+      repoOwner: constants.gitHub.repoOwner,
+      repoName: constants.gitHub.repoName,
       objExpression: `${constants.gitHub.metadataBranch}:metadata`
     }
   }

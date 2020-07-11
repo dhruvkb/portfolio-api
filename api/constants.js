@@ -6,6 +6,8 @@ module.exports = {
 
     personalAccessToken: process.env.GITHUB_PERSONAL_ACCESS_TOKEN,
 
+    repoOwner: 'dhruvkb',
+    repoName: 'portfolio-blog',
     metadataBranch: 'metadata',
     postsBranch: 'master'
   },

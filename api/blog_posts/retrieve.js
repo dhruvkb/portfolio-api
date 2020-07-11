@@ -18,8 +18,8 @@ const logic = (slug, res) => {
       }
     `,
     variables: {
-      repoOwner: 'dhruvkb',
-      repoName: 'portfolio-blog',
+      repoOwner: constants.gitHub.repoOwner,
+      repoName: constants.gitHub.repoName,
       objExpression: `${constants.gitHub.postsBranch}:posts/${slug}.md`
     }
   }
