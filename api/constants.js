@@ -4,7 +4,6 @@ module.exports = {
   gitHub: {
     apiEndpoint: 'https://api.github.com/graphql',
 
-    username: 'dhruvkb',
     personalAccessToken: process.env.GITHUB_PERSONAL_ACCESS_TOKEN,
 
     metadataBranch: 'metadata',

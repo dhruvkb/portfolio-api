@@ -31,9 +31,8 @@ const logic = (offset, count, res) => {
 
   axios
     .post(constants.gitHub.apiEndpoint, payload, {
-      auth: {
-        username: constants.gitHub.username,
-        password: constants.gitHub.personalAccessToken
+      headers: {
+        Authorization: `Bearer ${constants.gitHub.personalAccessToken}`
       }
     })
     .then(response => {

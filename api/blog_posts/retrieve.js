@@ -26,9 +26,8 @@ const logic = (slug, res) => {
 
   axios
     .post(constants.gitHub.apiEndpoint, payload, {
-      auth: {
-        username: constants.gitHub.username,
-        password: constants.gitHub.personalAccessToken
+      headers: {
+        Authorization: `Bearer ${constants.gitHub.personalAccessToken}`
       }
     })
     .then(response => {
