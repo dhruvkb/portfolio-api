@@ -1,5 +1,5 @@
 const axios = require('axios')
-const frontMatter = require('front-matter')
+const frontMatter = require('gray-matter')
 const markdownIt = require('markdown-it')({ html: true })
 
 const constants = require('../constants')
@@ -34,7 +34,7 @@ const logic = (slug, res) => {
     .then(response => {
       const { text } = response.data.data.repository.file
 
-      let { attributes, body } = frontMatter(text)
+      let { data: attributes, content: body } = frontMatter(text)
       attributes.apiUrl = constants.api.blogPosts.retrieve(attributes.slug)
       attributes.portfolioUrl = constants.portfolio.post(attributes.slug)
       body = markdownIt.render(body)
