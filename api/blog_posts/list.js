@@ -20,7 +20,8 @@ const logic = (offset, count, res) => {
             }
           }
         }
-      }`,
+      }
+    `,
     variables: {
       repoOwner: 'dhruvkb',
       repoName: 'portfolio-blog',
