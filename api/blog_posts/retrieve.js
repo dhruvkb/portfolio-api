@@ -3,6 +3,7 @@ const frontMatter = require('gray-matter')
 const markdownIt = require('markdown-it')({ html: true })
 
 const constants = require('../constants')
+const utils = require('../utils')
 
 const logic = (slug, res) => {
   const payload = {
@@ -34,6 +35,7 @@ const logic = (slug, res) => {
       const { text } = response.data.data.repository.file
 
       let { data: attributes, content: body } = frontMatter(text)
+      attributes.relativePublicationDate = utils.relativeDate(attributes.publicationDate)
       attributes.apiUrl = constants.api.blogPosts.retrieve(attributes.slug)
       attributes.portfolioUrl = constants.portfolio.post(attributes.slug)
       body = markdownIt.render(body)

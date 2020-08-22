@@ -1,6 +1,7 @@
 const axios = require('axios')
 
 const constants = require('../constants')
+const utils = require('../utils')
 
 const logic = (offset, count, res) => {
   const payload = {
@@ -45,6 +46,7 @@ const logic = (offset, count, res) => {
         .slice(offset, Math.min(offset + count, totalCount))
         .map(entry => {
           let post = JSON.parse(entry.file.text)
+          post.relativePublicationDate = utils.relativeDate(post.publicationDate)
           post.apiUrl = constants.api.blogPosts.retrieve(post.slug)
           post.portfolioUrl = constants.portfolio.post(post.slug)
 
