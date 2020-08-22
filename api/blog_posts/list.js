@@ -46,9 +46,15 @@ const logic = (offset, count, res) => {
         .slice(offset, Math.min(offset + count, totalCount))
         .map(entry => {
           let post = JSON.parse(entry.file.text)
-          post.relativePublicationDate = utils.relativeDate(post.publicationDate)
+
           post.apiUrl = constants.api.blogPosts.retrieve(post.slug)
           post.portfolioUrl = constants.portfolio.post(post.slug)
+
+          const publicationDate = {
+            absolute: utils.absoluteDate(post.publicationDate),
+            relative: utils.relativeDate(post.publicationDate)
+          }
+          post.publicationDate = publicationDate
 
           return post
         })
