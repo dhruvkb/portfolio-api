@@ -1,5 +1,3 @@
-const axios = require('axios')
-
 const constants = require('../constants')
 const utils = require('../utils')
 
@@ -24,20 +22,14 @@ const logic = (offset, count, res) => {
       }
     `,
     variables: {
-      repoOwner: constants.gitHub.repoOwner,
-      repoName: constants.gitHub.repoName,
-      objExpression: `${constants.gitHub.metadataBranch}:metadata`
+      ...constants.gitHub.repoInfo,
+      objExpression: `${constants.gitHub.branches.metadata}:metadata`
     }
   }
 
-  axios
-    .post(constants.gitHub.apiEndpoint, payload, {
-      headers: {
-        Authorization: `Bearer ${constants.gitHub.personalAccessToken}`
-      }
-    })
+  constants.gitHub.client(payload.query, payload.variables)
     .then(response => {
-      const { entries } = response.data.data.repository.tree
+      const { entries } = response.repository.tree
 
       const totalCount = entries.length - 1 // Hide blog post #0
 
@@ -47,14 +39,8 @@ const logic = (offset, count, res) => {
         .map(entry => {
           let post = JSON.parse(entry.file.text)
 
-          post.apiUrl = constants.api.blogPosts.retrieve(post.slug)
-          post.portfolioUrl = constants.portfolio.post(post.slug)
-
-          const publicationDate = {
-            absolute: utils.absoluteDate(post.publicationDate),
-            relative: utils.relativeDate(post.publicationDate)
-          }
-          post.publicationDate = publicationDate
+          utils.insertUrls(post)
+          utils.insertDates(post)
 
           return post
         })

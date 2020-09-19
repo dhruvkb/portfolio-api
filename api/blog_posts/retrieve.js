@@ -1,4 +1,3 @@
-const axios = require('axios')
 const frontMatter = require('gray-matter')
 const markdownIt = require('markdown-it')({ html: true })
 
@@ -19,31 +18,19 @@ const logic = (slug, res) => {
       }
     `,
     variables: {
-      repoOwner: constants.gitHub.repoOwner,
-      repoName: constants.gitHub.repoName,
-      objExpression: `${constants.gitHub.postsBranch}:posts/${slug}.md`
+      ...constants.gitHub.repoInfo,
+      objExpression: `${constants.gitHub.branches.posts}:posts/${slug}.md`
     }
   }
 
-  axios
-    .post(constants.gitHub.apiEndpoint, payload, {
-      headers: {
-        Authorization: `Bearer ${constants.gitHub.personalAccessToken}`
-      }
-    })
+  constants.gitHub.client(payload.query, payload.variables)
     .then(response => {
-      const { text } = response.data.data.repository.file
+      const { text } = response.repository.file
 
       let { data: attributes, content: body } = frontMatter(text)
 
-      attributes.apiUrl = constants.api.blogPosts.retrieve(attributes.slug)
-      attributes.portfolioUrl = constants.portfolio.post(attributes.slug)
-
-      const publicationDate = {
-        absolute: utils.absoluteDate(attributes.publicationDate),
-        relative: utils.relativeDate(attributes.publicationDate)
-      }
-      attributes.publicationDate = publicationDate
+      utils.insertUrls(attributes)
+      utils.insertDates(attributes)
 
       body = markdownIt.render(body)
 

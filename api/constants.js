@@ -1,25 +1,40 @@
+const { graphql: octokit } = require('@octokit/graphql')
+
 const origin = process.env.ORIGIN || 'https://api.dhruvkb.now.sh'
+const token = process.env.GITHUB_PERSONAL_ACCESS_TOKEN
+
+const list = (offset = 0, count = 5) =>
+  `${origin}/api/blog_posts/list?offset=${offset}&count=${count}`
+
+const retrieve = (slug = 'hello_world') =>
+  `${origin}/api/blog_posts/retrieve?slug=${slug}`
+
+const post = slug => `https://dhruvkb.github.io/#/blog/post/${slug}`
 
 module.exports = {
   gitHub: {
-    apiEndpoint: 'https://api.github.com/graphql',
+    client: octokit.defaults({
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }),
 
-    personalAccessToken: process.env.GITHUB_PERSONAL_ACCESS_TOKEN,
-
-    repoOwner: 'dhruvkb',
-    repoName: 'portfolio-blog',
-    metadataBranch: 'metadata',
-    postsBranch: 'master'
+    repoInfo: {
+      repoOwner: 'dhruvkb',
+      repoName: 'portfolio-blog'
+    },
+    branches: {
+      metadata: 'metadata',
+      posts: 'master'
+    }
   },
   api: {
     blogPosts: {
-      list: (offset = 0, count = 5) =>
-        `${origin}/api/blog_posts/list?offset=${offset}&count=${count}`,
-      retrieve: (slug = 'hello_world') =>
-        `${origin}/api/blog_posts/retrieve?slug=${slug}`
+      list,
+      retrieve
     }
   },
   portfolio: {
-    post: (slug) => `https://dhruvkb.github.io/#/blog/post/${slug}`
+    post
   }
 }
