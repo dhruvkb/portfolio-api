@@ -57,8 +57,5 @@ module.exports = (req, res) => {
   offset = parseInt(offset)
   count = parseInt(count)
 
-  // Bypass CORS issues
-  res.setHeader('Access-Control-Allow-Origin', '*')
-
   logic(offset, count, res)
 }

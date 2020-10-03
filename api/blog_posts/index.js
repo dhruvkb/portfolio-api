@@ -8,8 +8,5 @@ const logic = (res) => {
 }
 
 module.exports = (req, res) => {
-  // Bypass CORS issues
-  res.setHeader('Access-Control-Allow-Origin', '*')
-
   logic(res)
 }

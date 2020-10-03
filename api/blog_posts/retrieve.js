@@ -44,8 +44,5 @@ const logic = (slug, res) => {
 module.exports = (req, res) => {
   const { slug = 'hello_world' } = req.query
 
-  // Bypass CORS issues
-  res.setHeader('Access-Control-Allow-Origin', '*')
-
   logic(slug, res)
 }
