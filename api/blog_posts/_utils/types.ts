@@ -1,3 +1,15 @@
+import { RequestParameters } from '@octokit/graphql/dist-types/types'
+
+/**
+ * Represents the variables part of the GraphQL request, values from which will
+ * be used to populate placeholders defined in the GraphQL query.
+ */
+export interface Variables extends RequestParameters {
+  repoOwner: string,
+  repoName: string,
+  objExpression: string
+}
+
 /**
  * Represents the GraphQL data returned by the GitHub API as invoked in the
  * list endpoint at `blog_posts/`.

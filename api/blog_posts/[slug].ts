@@ -4,20 +4,14 @@ import frontMatter from 'gray-matter'
 import MarkdownIt from 'markdown-it'
 
 import { repository, client } from '../_utils/github'
+import { Payload } from '../_utils/types'
 import { insertDates, insertUrls } from './_utils/posts'
-import { Retrieve, Post as Attributes } from './_utils/types'
+import { Variables, Retrieve, Post as Attributes } from './_utils/types'
 
 const markdownIt = new MarkdownIt({ html: true })
 
 const logic = async (slug: string, res: NowResponse): Promise<void> => {
-  const payload: {
-    query: string,
-    variables: {
-      repoOwner: string,
-      repoName: string,
-      objExpression: string
-    }
-  } = {
+  const payload: Payload<Variables> = {
     query: `
       query($repoOwner: String!, $repoName: String!, $objExpression: String) {
         repository(owner: $repoOwner, name: $repoName) {

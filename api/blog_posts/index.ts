@@ -1,18 +1,12 @@
 import { NowRequest, NowResponse } from '@vercel/node'
 
 import { repository, client } from '../_utils/github'
+import { Payload } from '../_utils/types'
 import { insertDates, insertUrls } from './_utils/posts'
-import { Entry, List, Post } from './_utils/types'
+import { Variables, Entry, List, Post } from './_utils/types'
 
 const logic = async (offset: number, count: number, res: NowResponse): Promise<void> => {
-  const payload: {
-    query: string,
-    variables: {
-      repoOwner: string,
-      repoName: string,
-      objExpression: string
-    }
-  } = {
+  const payload: Payload<Variables> = {
     query: `
       query($repoOwner: String!, $repoName: String!, $objExpression: String) {
         repository(owner: $repoOwner, name: $repoName) {
