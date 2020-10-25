@@ -10,7 +10,14 @@ import { Retrieve, Post as Attributes } from './_utils/types'
 const markdownIt = new MarkdownIt({ html: true })
 
 const logic = async (slug: string, res: NowResponse): Promise<void> => {
-  const payload = {
+  const payload: {
+    query: string,
+    variables: {
+      repoOwner: string,
+      repoName: string,
+      objExpression: string
+    }
+  } = {
     query: `
       query($repoOwner: String!, $repoName: String!, $objExpression: String) {
         repository(owner: $repoOwner, name: $repoName) {

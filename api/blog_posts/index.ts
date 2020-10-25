@@ -5,7 +5,14 @@ import { insertDates, insertUrls } from './_utils/posts'
 import { Entry, List, Post } from './_utils/types'
 
 const logic = async (offset: number, count: number, res: NowResponse): Promise<void> => {
-  const payload = {
+  const payload: {
+    query: string,
+    variables: {
+      repoOwner: string,
+      repoName: string,
+      objExpression: string
+    }
+  } = {
     query: `
       query($repoOwner: String!, $repoName: String!, $objExpression: String) {
         repository(owner: $repoOwner, name: $repoName) {
