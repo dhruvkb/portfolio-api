@@ -46,8 +46,8 @@ export interface Post {
   } | string,
   slug: string,
   tags: string[],
-  urls: {
+  urls?: {
     api: string,
     portfolio: string
-  } | null
+  }
 }
