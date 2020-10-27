@@ -5,8 +5,8 @@ import { RequestParameters } from '@octokit/graphql/dist-types/types'
  * be used to populate placeholders defined in the GraphQL query.
  */
 export interface Variables extends RequestParameters {
-  repoOwner: string,
-  repoName: string,
+  repoOwner: string
+  repoName: string
   objExpression: string
 }
 
@@ -39,7 +39,7 @@ export interface Retrieve {
  * containing the metadata of that post.
  */
 export interface Entry {
-  name: string,
+  name: string
   file: {
     text: string
   }
@@ -49,17 +49,17 @@ export interface Entry {
  * Represents the metadata attributes of an entry in the blog.
  */
 export interface Post {
-  index: number,
-  title: string,
-  excerpt: string,
+  index: number
+  title: string
+  excerpt: string
   publicationDate: {
-    absolute: string,
+    absolute: string
     relative: string
-  } | string,
-  slug: string,
-  tags: string[],
+  } | string
+  slug: string
+  tags: string[]
   urls?: {
-    api: string,
+    api: string
     portfolio: string
   }
 }
